@@ -45,7 +45,7 @@
     run: function(cmd, time){
       this.cmd = cmd
       
-      debounce("stop", function(){
+      this.debounce("stop", function(){
         this.cmd = "Stop"
       },time || 500)
     },
