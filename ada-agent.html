@@ -1,0 +1,65 @@
+<link rel="import" href="../paper-slider/paper-slider.html">
+<link rel="import" href="../polymer/polymer.html">
+<!--
+  `<ada-agent></ada-agent>` sc
+  @demo demo.html
+-->
+<dom-module id="ada-agent">
+  <template>
+    <style>:host {display:inline-block;color:#666}</style>
+    
+    <template is="dom-if" if="[[cmd]]">
+      <img src$="http://[[ip]]/[[cmd]]" />
+    </template>
+    <center>
+    <h1>Demonstration Web Page for Software Cornwall</h1>
+    <h2>Simple NodeMCU Web Server</h2>
+    
+    <button on-tap="Left" >&lt;</button>
+    <button on-tap="Forward" >^</button>
+    <button on-tap="Right" >></button>
+    <br>
+    <button on-tap="Backwards" >v</button>
+    
+    <paper-slider min="1" max="11" value="{{speed}}"></paper-slider>
+    </center>
+    
+    
+  </template>
+</dom-module>
+<script>
+  Polymer({
+    is: "ada-agent",
+    properties:{
+      ip:{
+        type:String,
+        value:"192.168.1.38",
+      },
+      cmd:{
+      },
+      speed:{
+        type:Number,
+        value:4,
+      },
+    },
+    run: function(cmd, time){
+      this.cmd = cmd
+      
+      debounce("stop", function(){
+        this.cmd = "Stop"
+      },time || 500)
+    },
+    Left: function(undefined){
+      this.run("Left")
+    },
+    Right: function(undefined){
+      this.run("Right") 
+    },
+    Backwards: function(undefined){
+      this.run("Backwards") 
+    },
+    Forward: function(undefined){
+      this.run("Forward"+this.speed, 2000)
+    },
+  })
+</script>
